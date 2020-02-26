@@ -6,11 +6,18 @@
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__TOS_WIN__) || defined(__WINDOWS__)
     #include <windows.h>
 #endif
+#define MAX_DOLZINA 100
 using namespace std;
 
-void polja(char player_field[][12], char computer_field[][12], int n){
+void vpisImena(char ime[]){
+	cout << "Vpisi svoje ime: ";
+	cin >> ime;
+}
+
+void polja(char player_field[][12], char computer_field[][12], int n, char ime[]){
 	system("clear"); //na sistemu Windows dodaj komentar
-	//system("cls"); //na sistemu Windows odstrani komentar 
+	//system("cls"); //na sistemu Windows odstrani komentar
+	cout << "Igralec: " << ime << "\n\n";
 	for (int i=0;i<n;i++){
 		for(int j=0;j<12;j++){
 			cout << setw(2) << player_field[i][j];
@@ -18,6 +25,7 @@ void polja(char player_field[][12], char computer_field[][12], int n){
 		cout << endl;
 	}
 	cout << "\n\n\n";
+	cout << "Racunalnik:\n";
 	for (int i=0;i<n;i++){
 		for(int j=0;j<12;j++){
 			cout << setw(2) << computer_field[i][j];
@@ -61,8 +69,12 @@ int main(){
 	srand(time(NULL));
 	char player_field[12][12];
 	char computer_field[12][12];
+	char ime[MAX_DOLZINA] = {0};
+	vpisImena(ime);
 	clearTable(player_field);
 	clearTable(computer_field);
+	system("clear"); //komentiraj na Windows
+	//system("cls")  //odkomentiraj na Windows
 	cout << "Postavitev 3-mestne ladjice:\n";
 	postavitev_player(player_field, 3);
 	cout << "Postavitev prve 2-mestne ladjice:\n";
@@ -72,12 +84,14 @@ int main(){
 	postavitev_computer(computer_field, 3);
 	postavitev_computer(computer_field, 2);
 	postavitev_computer(computer_field, 2);
-	polja(player_field, computer_field, 12);
+	polja(player_field, computer_field, 12, ime);
 
-	bool winPC, winPlayer, ugibanjePlayer = true, ugibanjePC = false;
-	int playerX, playerY,pcX, pcY, stevecPC = 0, stevecPlayer = 0;
+	bool winPC, winPlayer, ugibanjePlayer = true, ugibanjePC = false, game = true;
+	int playerX, playerY,pcX, pcY;
+	int stevecPC = 0, stevecPlayer = 0;
 
-	while(true){
+	while(game){
+		cout << "Ugibanje igralca:\n";
 		while(ugibanjePlayer){
 			cout << "Vpisi x in y na katerega bi ciljal (oba med 0 in 11): \n";
 			cout << "x: ";
@@ -88,44 +102,55 @@ int main(){
 			if(computer_field[playerX][playerY] == 'X'){
 				computer_field[playerX][playerY] = '@';
 				stevecPlayer++;
-				cout << "Zadel si!\n";
-				if(stevecPlayer==7){
+				cout << "Zadel si!\n\n";
+				if(stevecPlayer == 7){
 					winPlayer = true;
 					winPC = false;
 					break;
 				}
+			}else if(computer_field[playerX][playerY] == '@'){
+				cout << "To polje si ze zadel.\n\n";
 			}else {
 				computer_field[playerX][playerY] = '#';
+				cout << "Zgresil si.\n\n";
 				ugibanjePlayer = false;
 				ugibanjePC = true;
 				break;
 			}
 		}
 		while(ugibanjePC){
+			cout << "Ugibanje racunalnika.....\n";
 			pcX = rand()%12;
 			pcY = rand()%12;
 			if(player_field[pcX][pcY] == 'X'){
+				cout << "Racunalnik je zadel.\n";
 				player_field[pcX][pcY] = '@';
 				stevecPC++;
 				if(stevecPC == 7){
-					winPC = true;
-					winPlayer = false;
 					break;
 				}
-			}else {
+			}else if(player_field[pcX][pcY] == '@'){
+				cout << "Racunalnik je ponovno zadel isto polje.\n";
+			}
+			else {
+				cout << "Racunalnik je zgresil.\n\n";
 				player_field[pcX][pcY] = '#';
 				ugibanjePC = false;
 				ugibanjePlayer = true;
 				break;
 			}
 		}
-		if(winPlayer){
-			cout << "Bravo! Zmagal si!\n";
-			break;
-		}else if(winPC){
-			cout << "Izgubil si... Vec srece prihodnjic!\n";
+		if((stevecPlayer==7) || (stevecPC == 7)){
+			game = false;
 		}
 	}
-	polja(player_field, computer_field, 12);	
+	polja(player_field, computer_field, 12, ime);
+	if (stevecPlayer == 7) winPlayer = true;
+	else if(stevecPC == 7) winPC = true; 
+	if(winPlayer){
+		cout << "Bravo! Zmagal si!\n";
+	} else if(winPC){
+		cout << "Izgubil si... Vec srece prihodnjic!\n";
+	}
 	return 0;
-} 	
+}
