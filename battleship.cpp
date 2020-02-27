@@ -11,7 +11,7 @@ void vpisImena(char ime[]){
 	cin >> ime;
 }
 
-void polja(char player_field[][12], char computer_field[][12], int n, char ime[]){
+void poljeIgralec(char player_field[][12], int n, char ime[]){
 	system("clear"); //na sistemu Windows dodaj komentar
 	//system("cls"); //na sistemu Windows odstrani komentar
 	cout << "Igralec: " << ime << "\n\n";
@@ -21,6 +21,17 @@ void polja(char player_field[][12], char computer_field[][12], int n, char ime[]
 		}
 		cout << endl;
 	}
+	/*cout << "\n\n\n";
+	cout << "Racunalnik:\n";
+	for (int i=0;i<n;i++){
+		for(int j=0;j<12;j++){
+			cout << setw(2) << computer_field[i][j];
+		}
+		cout << endl;
+	}*/
+}
+
+void poljeRac(char computer_field[][12], int n){
 	cout << "\n\n\n";
 	cout << "Racunalnik:\n";
 	for (int i=0;i<n;i++){
@@ -101,7 +112,6 @@ int main(){
 	postavitevComputer(computer_field, 3);
 	postavitevComputer(computer_field, 2);
 	postavitevComputer(computer_field, 2);
-	//polja(player_field, computer_field, 12, ime);
 
 	bool winPC, winPlayer, ugibanjePlayer = true, ugibanjePC = false, game = true;
 	int playerX, playerY,pcX, pcY;
@@ -109,6 +119,8 @@ int main(){
 
 	system("clear"); //komentiraj na Windows
 	//system("cls"); //odkomentiraj na Windows
+	poljeIgralec(player_field, 12, ime);
+	poljeRac(computer_field, 12);
 	while(game){
 		cout << "Ugibanje igralca:\n";
 		while(ugibanjePlayer){
@@ -137,6 +149,9 @@ int main(){
 				break;
 			}
 		}
+		if((stevecPlayer==7) || (stevecPC == 7)){
+			game = false;
+		}
 		while(ugibanjePC){
 			cout << "Ugibanje racunalnika.....\n";
 			pcX = rand()%12;
@@ -163,7 +178,8 @@ int main(){
 			game = false;
 		}
 	}
-	polja(player_field, computer_field, 12, ime);
+	poljeIgralec(player_field, 12, ime);
+	poljeRac(computer_field, 12);
 	if (stevecPlayer == 7) winPlayer = true;
 	else if(stevecPC == 7) winPC = true; 
 	if(winPlayer){
