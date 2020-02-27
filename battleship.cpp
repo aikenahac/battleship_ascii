@@ -120,7 +120,7 @@ int main(){
 	system("clear"); //komentiraj na Windows
 	//system("cls"); //odkomentiraj na Windows
 	poljeIgralec(player_field, 12, ime);
-	poljeRac(computer_field, 12);
+	//poljeRac(computer_field, 12);
 	while(game){
 		cout << "Ugibanje igralca:\n";
 		while(ugibanjePlayer){
