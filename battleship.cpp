@@ -7,8 +7,12 @@
 using namespace std;
 
 void vpisImena(char ime[]){
+	system("clear"); //na sistemu Windows dodaj komentar
+	//system("cls"); //na sistemu Windows odstrani komentar
 	cout << "Vpisi svoje ime: ";
-	cin >> ime;
+	//gets(ime); //Windows only
+	//cin >> ime;
+	cin.getline(ime, MAX_DOLZINA);
 }
 
 void poljeIgralec(char player_field[][12], int n, char ime[]){
@@ -31,12 +35,16 @@ void poljeIgralec(char player_field[][12], int n, char ime[]){
 	}*/
 }
 
-void poljeRac(char computer_field[][12], int n){
+void poljeRac(char computer_field[][12], int n){//, int xi, int yi){
 	cout << "\n\n\n";
 	cout << "Racunalnik:\n";
 	for (int i=0;i<n;i++){
 		for(int j=0;j<12;j++){
-			cout << setw(2) << computer_field[i][j];
+             if(computer_field[i][j]=='@' || computer_field[i][j]=='#')
+                    cout<<setw(2)<<computer_field[i][j];
+            else
+				cout << setw(2) << "."; //computer_field[i][j];*/
+
 		}
 		cout << endl;
 	}
@@ -85,12 +93,13 @@ void postavitevComputer(char computer_field[][12], int len){
 void clearTable(char field[][12]){
 	for(int i=0;i<12;i++){
 		for(int j=0;j<12;j++){
-			field[i][j] = '0';
+			field[i][j] = '.';
 		}
 	}
 }
 
 int main(){
+	cout << "\x1b[40;36m\n";
 	srand(time(NULL));
 	char player_field[12][12];
 	char computer_field[12][12];
@@ -99,8 +108,9 @@ int main(){
 	vpisImena(ime);
 	clearTable(player_field);
 	clearTable(computer_field);
-	system("clear"); //komentiraj na Windows
-	//system("cls")  //odkomentiraj na Windows
+	system("clear"); //na sistemu Windows dodaj komentar
+	//system("cls"); //na sistemu Windows odstrani komentar
+	
 	testnoPolje(sample_field);
 	cout << "\n\n\n";
 	cout << "Postavitev 3-mestne ladjice:\n";
@@ -117,13 +127,15 @@ int main(){
 	int playerX, playerY,pcX, pcY;
 	int stevecPC = 0, stevecPlayer = 0;
 
-	system("clear"); //komentiraj na Windows
-	//system("cls"); //odkomentiraj na Windows
+	//system("clear"); //na sistemu Linux odstrani komentar
+	//system("cls"); //na sistemu Linux dodaj komentar
 	poljeIgralec(player_field, 12, ime);
 	//poljeRac(computer_field, 12);
 	while(game){
 		cout << "Ugibanje igralca:\n";
 		while(ugibanjePlayer){
+            poljeIgralec(player_field, 12, ime);
+            poljeRac(computer_field, 12);
 			cout << "Vpisi x in y na katerega bi ciljal (oba med 0 in 11): \n";
 			cout << "x: ";
 			cin >> playerX;
@@ -132,6 +144,9 @@ int main(){
 			cout << endl;
 			if(computer_field[playerX][playerY] == 'X'){
 				computer_field[playerX][playerY] = '@';
+				if(computer_field[playerX++][playerY] == 'X'){
+					computer_field[playerX++][playerY] = '@';
+				}
 				stevecPlayer++;
 				cout << "Zadel si!\n\n";
 				if(stevecPlayer == 7){
@@ -156,7 +171,8 @@ int main(){
 			cout << "Ugibanje racunalnika.....\n";
 			pcX = rand()%12;
 			pcY = rand()%12;
-			if(player_field[pcX][pcY] == 'X'){
+			do{
+            if(player_field[pcX][pcY] == 'X'){
 				cout << "Racunalnik je zadel.\n";
 				player_field[pcX][pcY] = '@';
 				stevecPC++;
@@ -173,6 +189,7 @@ int main(){
 				ugibanjePlayer = true;
 				break;
 			}
+			}while(player_field[pcX][pcY] == 'X');
 		}
 		if((stevecPlayer==7) || (stevecPC == 7)){
 			game = false;
@@ -181,7 +198,7 @@ int main(){
 	poljeIgralec(player_field, 12, ime);
 	poljeRac(computer_field, 12);
 	if (stevecPlayer == 7) winPlayer = true;
-	else if(stevecPC == 7) winPC = true; 
+	else if(stevecPC == 7) winPC = true;
 	if(winPlayer){
 		cout << "Bravo! Zmagal si!\n";
 	} else if(winPC){
