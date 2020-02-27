@@ -3,9 +3,6 @@
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__TOS_WIN__) || defined(__WINDOWS__)
-    #include <windows.h>
-#endif
 #define MAX_DOLZINA 100
 using namespace std;
 
@@ -34,7 +31,24 @@ void polja(char player_field[][12], char computer_field[][12], int n, char ime[]
 	}
 }
 
-void postavitev_player(char player_field[][12], int len){
+void testnoPolje(int sample_field[][13]){
+	int koordinataX = 0;
+	for (int k=0; k<12;k++){
+		sample_field[k][0] = koordinataX;
+		cout << setw(3)<<sample_field[k][0];
+		koordinataX++;
+	}
+	cout << "\n";
+	for (int i=0;i<12;i++){
+		for(int j=0;j<12;j++){
+			sample_field[i][j] = 0;
+			cout << setw(3) << sample_field[i][j];
+		}
+		cout << endl;
+	}
+}
+
+void postavitevPlayer(char player_field[][12], int len){
 	int coordX, coordY;
 	cout << "Vpisi x koordinato: ";
 	cin >> coordY;
@@ -49,7 +63,7 @@ void postavitev_player(char player_field[][12], int len){
 	}
 }
 
-void postavitev_computer(char computer_field[][12], int len){
+void postavitevComputer(char computer_field[][12], int len){
 	int coordXPC = rand()%(12-len+1);
 	int coordYPC = rand()%12;
 	for (int i=0; i<len;i++){
@@ -69,27 +83,32 @@ int main(){
 	srand(time(NULL));
 	char player_field[12][12];
 	char computer_field[12][12];
+	int sample_field[13][13];
 	char ime[MAX_DOLZINA] = {0};
 	vpisImena(ime);
 	clearTable(player_field);
 	clearTable(computer_field);
 	system("clear"); //komentiraj na Windows
 	//system("cls")  //odkomentiraj na Windows
+	testnoPolje(sample_field);
+	cout << "\n\n\n";
 	cout << "Postavitev 3-mestne ladjice:\n";
-	postavitev_player(player_field, 3);
+	postavitevPlayer(player_field, 3);
 	cout << "Postavitev prve 2-mestne ladjice:\n";
-	postavitev_player(player_field, 2);
+	postavitevPlayer(player_field, 2);
 	cout << "Postavitev druge 2-mestne ladjice:\n";
-	postavitev_player(player_field, 2);
-	postavitev_computer(computer_field, 3);
-	postavitev_computer(computer_field, 2);
-	postavitev_computer(computer_field, 2);
-	polja(player_field, computer_field, 12, ime);
+	postavitevPlayer(player_field, 2);
+	postavitevComputer(computer_field, 3);
+	postavitevComputer(computer_field, 2);
+	postavitevComputer(computer_field, 2);
+	//polja(player_field, computer_field, 12, ime);
 
 	bool winPC, winPlayer, ugibanjePlayer = true, ugibanjePC = false, game = true;
 	int playerX, playerY,pcX, pcY;
 	int stevecPC = 0, stevecPlayer = 0;
 
+	system("clear"); //komentiraj na Windows
+	//system("cls"); //odkomentiraj na Windows
 	while(game){
 		cout << "Ugibanje igralca:\n";
 		while(ugibanjePlayer){
