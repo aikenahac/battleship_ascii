@@ -176,6 +176,17 @@ int main(){
             if(player_field[pcX][pcY] == 'X'){
 				cout << "Racunalnik je zadel.\n";
 				player_field[pcX][pcY] = '@';
+				if(player_field[pcX++][pcY] == 'X'){
+					player_field[pcX++][pcY] == '@';
+					if(player_field[pcX += 2][pcY] == 'X'){
+						player_field[pcX += 2][pcY] == '@';
+					}
+				}else if(player_field[pcX--][pcY] == 'X'){
+					player_field[pcX--][pcY] == '@';
+					if(player_field[pcX -= 2][pcY] == 'X'){
+						player_field[pcX -= 2][pcY] == '@';
+					}
+				}
 				stevecPC++;
 				if(stevecPC == 7){
 					break;
