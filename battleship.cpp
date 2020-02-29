@@ -176,15 +176,24 @@ int main(){
             if(player_field[pcX][pcY] == 'X'){
 				cout << "Racunalnik je zadel.\n";
 				player_field[pcX][pcY] = '@';
-				if(player_field[pcX++][pcY] == 'X'){
-					player_field[pcX++][pcY] == '@';
-					if(player_field[pcX += 2][pcY] == 'X'){
-						player_field[pcX += 2][pcY] == '@';
+				if((player_field[pcX++][pcY] == 'X') || (player_field[pcX--][pcY] == 'X')){
+					if(player_field[pcX++][pcY] == 'X'){
+						player_field[pcX++][pcY] = '@';
+						stevecPC++;
 					}
-				}else if(player_field[pcX--][pcY] == 'X'){
-					player_field[pcX--][pcY] == '@';
-					if(player_field[pcX -= 2][pcY] == 'X'){
-						player_field[pcX -= 2][pcY] == '@';
+					else if(player_field[pcX--][pcY] == 'X'){
+						player_field[pcX--][pcY] = '@';
+						stevecPC++;
+					}
+					if((player_field[pcX+=2][pcY] == 'X') || (player_field[pcX-=2][pcY] == 'X')){
+						if(player_field[pcX+=2][pcY] == 'X'){
+							player_field[pcX+=2][pcY] = '@';
+							stevecPC++;
+						}
+						else if(player_field[pcX-=2][pcY] == 'X'){
+							player_field[pcX-=2][pcY] = '@';
+							stevecPC++;
+						}
 					}
 				}
 				stevecPC++;
