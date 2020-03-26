@@ -25,14 +25,6 @@ void poljeIgralec(char player_field[][12], int n, char ime[]){
 		}
 		cout << endl;
 	}
-	/*cout << "\n\n\n";
-	cout << "Racunalnik:\n";
-	for (int i=0;i<n;i++){
-		for(int j=0;j<12;j++){
-			cout << setw(2) << computer_field[i][j];
-		}
-		cout << endl;
-	}*/
 }
 
 void poljeRac(char computer_field[][12], int n){//, int xi, int yi){
