@@ -3,11 +3,18 @@
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
+
+#ifdef _WIN32
+#define CLEAR "cls"
+#else //In any other OS
+#define CLEAR "clear"
+#endif
+
 #define MAX_DOLZINA 100
 using namespace std;
 
 void vpisImena(char ime[]){
-	system("clear"); //na sistemu Windows dodaj komentar
+	system(CLEAR); //na sistemu Windows dodaj komentar
 	//system("cls"); //na sistemu Windows odstrani komentar
 	cout << "Vpisi svoje ime: ";
 	//gets(ime); //Windows only
@@ -16,7 +23,7 @@ void vpisImena(char ime[]){
 }
 
 void poljeIgralec(char player_field[][12], int n, char ime[]){
-	system("clear"); //na sistemu Windows dodaj komentar
+	system(CLEAR); //na sistemu Windows dodaj komentar
 	//system("cls"); //na sistemu Windows odstrani komentar
 	cout << "Igralec: " << ime << "\n\n";
 	for (int i=0;i<n;i++){
@@ -119,11 +126,7 @@ int main(){
 	bool winPC, winPlayer, ugibanjePlayer = true, ugibanjePC = false, game = true;
 	int playerX, playerY,pcX, pcY;
 	int stevecPC = 0, stevecPlayer = 0;
-
-	//system("clear"); //na sistemu Linux odstrani komentar
-	//system("cls"); //na sistemu Linux dodaj komentar
 	poljeIgralec(player_field, 12, ime);
-	//poljeRac(computer_field, 12);
 	while(game){
 		cout << "Ugibanje igralca:\n";
 		while(ugibanjePlayer){
