@@ -14,6 +14,7 @@
 #define COLOR cout<<"\x1b[40;36m\n"
 #else
 #define COLOR system("color a")
+#endif
 
 #define MAX_DOLZINA 100
 using namespace std;
