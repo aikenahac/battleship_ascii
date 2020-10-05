@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
+#include "asciiDraw.h"
 
 #ifdef _WIN32
 #define CLEAR "cls"
@@ -193,9 +194,11 @@ int main(){
 	if (stevecPlayer == 7) winPlayer = true;
 	else if(stevecPC == 7) winPC = true;
 	if(winPlayer){
-		cout << "Bravo! Zmagal si!\n";
+  		system(CLEAR);
+		displayMessage("winMsg.txt");
 	} else if(winPC){
-		cout << "Izgubil si... Vec srece prihodnjic!\n";
+		system(CLEAR);
+		displayMessage("loseMsg.txt");
 	}
 	return 0;
 }
