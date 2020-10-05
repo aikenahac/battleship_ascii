@@ -10,21 +10,22 @@
 #define CLEAR "clear"
 #endif
 
+#ifdef _WIN32
+#define COLOR cout<<"\x1b[40;36m\n"
+#else
+#define COLOR system("color a")
+
 #define MAX_DOLZINA 100
 using namespace std;
 
 void vpisImena(char ime[]){
-	system(CLEAR); //na sistemu Windows dodaj komentar
-	//system("cls"); //na sistemu Windows odstrani komentar
+	system(CLEAR);
 	cout << "Vpisi svoje ime: ";
-	//gets(ime); //Windows only
-	//cin >> ime;
 	cin.getline(ime, MAX_DOLZINA);
 }
 
 void poljeIgralec(char player_field[][12], int n, char ime[]){
-	system(CLEAR); //na sistemu Windows dodaj komentar
-	//system("cls"); //na sistemu Windows odstrani komentar
+	system(CLEAR);
 	cout << "Igralec: " << ime << "\n\n";
 	for (int i=0;i<n;i++){
 		for(int j=0;j<12;j++){
@@ -34,7 +35,7 @@ void poljeIgralec(char player_field[][12], int n, char ime[]){
 	}
 }
 
-void poljeRac(char computer_field[][12], int n){//, int xi, int yi){
+void poljeRac(char computer_field[][12], int n){
 	cout << "\n------------------------\n\n";
 	cout << "Racunalnik:\n\n";
 	for (int i=0;i<n;i++){
@@ -42,7 +43,7 @@ void poljeRac(char computer_field[][12], int n){//, int xi, int yi){
              if(computer_field[i][j]=='@' || computer_field[i][j]=='#')
                     cout<<setw(2)<<computer_field[i][j];
             else
-				cout << setw(2) << "."; //computer_field[i][j];*/
+				cout << setw(2) << ".";
 
 		}
 		cout << endl;
@@ -98,8 +99,7 @@ void clearTable(char field[][12]){
 }
 
 int main(){
-	cout << "\x1b[40;36m\n"; //comment on Windows
-	//system("color a"); //uncomment on Windows
+	COLOR;
 	srand(time(NULL));
 	char player_field[12][12];
 	char computer_field[12][12];
@@ -108,8 +108,7 @@ int main(){
 	vpisImena(ime);
 	clearTable(player_field);
 	clearTable(computer_field);
-	system("clear"); //na sistemu Windows dodaj komentar
-	//system("cls"); //na sistemu Windows odstrani komentar
+	system(CLEAR);
 	
 	testnoPolje(sample_field);
 	cout << "\n\n\n";
