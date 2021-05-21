@@ -1,0 +1,6 @@
+# IDE folders
+.vscode/
+.idea/
+
+# Build files
+battleship
